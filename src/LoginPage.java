@@ -6,11 +6,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 
 public class LoginPage extends javax.swing.JFrame {
 
@@ -178,54 +178,52 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         // TODO add your handling code here:
-        
-    String url = "jdbc:mysql://localhost:3308/library";
-    String mysqluser = "root";
-    String mysqlpwd = "";
-    String username = uname.getText();
-    String password = new String(pwd.getPassword());
 
-    String query = "SELECT password FROM admin WHERE name = '" + username + "'";
+        String url = "jdbc:mysql://localhost:3308/library";
+        String mysqluser = "root";
+        String mysqlpwd = "";
+        String username = uname.getText();
+        String password = new String(pwd.getPassword());
 
-    try {
+        String query = "SELECT password FROM admin WHERE name = '" + username + "'";
+
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Connection conn = DriverManager.getConnection(url, mysqluser, mysqlpwd);
-       Statement stm = conn.createStatement();
-        ResultSet rs = stm.executeQuery(query);
-
-        if (rs.next()) {
-            String dbPassword = rs.getString("password");
-            if (password.equals(dbPassword)) {
-                //javax.swing.JOptionPane.showMessageDialog(this, "Login successful!");
-                // Proceed to the next page or functionality
-                Dashboard dsh = new Dashboard();
-                dsh.setVisible(true);
-                this.dispose();
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Incorrect password!");
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "User not found!");
+            Connection conn = DriverManager.getConnection(url, mysqluser, mysqlpwd);
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery(query);
+
+            if (rs.next()) {
+                String dbPassword = rs.getString("password");
+                if (password.equals(dbPassword)) {
+                    //javax.swing.JOptionPane.showMessageDialog(this, "Login successful!");
+                    // Proceed to the next page or functionality
+                    Dashboard dsh = new Dashboard();
+                    dsh.setVisible(true);
+                    this.dispose();
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Incorrect password!");
+                }
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "User not found!");
+            }
+
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            javax.swing.JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage());
         }
 
-        conn.close();
-    } catch (SQLException ex) {
-    Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
-    javax.swing.JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage());
-}
 
-
-
-        
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void unameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unameActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_unameActionPerformed
 
     private void pwdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdActionPerformed
@@ -235,7 +233,7 @@ public class LoginPage extends javax.swing.JFrame {
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
         // TODO add your handling code here:
         SignupPage signup = new SignupPage();
-        signup.setVisible(true);              
+        signup.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn2ActionPerformed
 
