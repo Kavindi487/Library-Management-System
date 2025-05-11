@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/java/netbeans_projects/Library%20Management%20System/src/SignupPage.java</file>
-            <file>file:/D:/java/netbeans_projects/Library%20Management%20System/src/LoginPage.java</file>
+            <file>file:/D:/java/netbeans_projects/Library%20Management%20System/src/booksAvailable.java</file>
+            <file>file:/D:/java/netbeans_projects/Library%20Management%20System/src/edit_admin.java</file>
+            <file>file:/D:/java/netbeans_projects/Library%20Management%20System/src/remove_books.java</file>
+            <file>file:/D:/java/netbeans_projects/Library%20Management%20System/src/remove_staff.java</file>
+            <file>file:/D:/java/netbeans_projects/Library%20Management%20System/src/staff_details.java</file>
             <file>file:/D:/java/netbeans_projects/Library%20Management%20System/src/Dashboard.java</file>
         </group>
     </open-files>
