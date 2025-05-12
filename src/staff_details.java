@@ -3,10 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-/**
- *
- * @author ASUS
- */
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 public class staff_details extends javax.swing.JFrame {
 
     /**
@@ -14,6 +17,7 @@ public class staff_details extends javax.swing.JFrame {
      */
     public staff_details() {
         initComponents();
+        setDefaultCloseOperation(staff_details.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -47,9 +51,19 @@ public class staff_details extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("EXIT");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setText("FETCH");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,6 +94,42 @@ public class staff_details extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Clear previous rows
+
+        String url = "jdbc:mysql://localhost:3308/library";
+        String mysqluser = "root";
+        String mysqlpwd = "";
+        String query = "SELECT * FROM staff;";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
+            Connection conn = DriverManager.getConnection(url, mysqluser, mysqlpwd);
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery(query);
+
+            while (rs.next()) {
+                String staffid = rs.getString("staff_id");
+                String name= rs.getString("name");
+                int contact = rs.getInt("contact");
+                model.addRow(new Object[]{staffid, name, contact});
+            }
+
+            rs.close();
+            stm.close();
+            conn.close();
+        } catch (Exception ex) {
+            //Logger.getLogger(booksAvailable.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error fetching data: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
