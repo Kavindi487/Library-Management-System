@@ -7,6 +7,9 @@
  *
  * @author ASUS
  */
+import java.sql.*;
+import javax.swing.*;
+
 public class remove_books extends javax.swing.JFrame {
 
     /**
@@ -14,6 +17,7 @@ public class remove_books extends javax.swing.JFrame {
      */
     public remove_books() {
         initComponents();
+        setDefaultCloseOperation(remove_books.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -27,7 +31,7 @@ public class remove_books extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        t1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -42,10 +46,20 @@ public class remove_books extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(204, 255, 204));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("DELETE");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(204, 255, 204));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setText("CANCEL");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -55,7 +69,7 @@ public class remove_books extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(143, 143, 143)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(t1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -72,7 +86,7 @@ public class remove_books extends javax.swing.JFrame {
                 .addGap(115, 115, 115)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(t1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(84, 84, 84)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -93,6 +107,37 @@ public class remove_books extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String url = "jdbc:mysql://localhost:3308/library";
+        String mysqluser = "root";
+        String mysqlpwd = "";
+        String input = t1.getText();
+        String query = "DELETE FROM books WHERE book_id='" + input + "' or name='" + input + "';";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
+            Connection conn = DriverManager.getConnection(url, mysqluser, mysqlpwd);
+            Statement stm = conn.createStatement();
+            int rows = stm.executeUpdate(query);
+            if (rows > 0) {
+                JOptionPane.showMessageDialog(this, "Book removed from Library");
+            } else {
+                JOptionPane.showMessageDialog(this, "No such book available");
+            }
+            stm.close();
+
+        } catch (Exception ex) {
+            //Logger.getLogger(booksAvailable.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error fetching data: " + ex.getMessage());
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,6 +179,6 @@ public class remove_books extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField t1;
     // End of variables declaration//GEN-END:variables
 }
